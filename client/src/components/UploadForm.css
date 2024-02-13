@@ -10,7 +10,8 @@
 
 .upload-form-box {
     border: 1px dashed #aaa;
-    height: 300px;
+    height: auto;
+    min-height: 300px;
     width: 100%;
     border-radius: 10px;
     display: flex;
@@ -48,4 +49,10 @@
 
 .upload-form-submit-button:hover {
     background: #eee;
+}
+
+.upload-form-box-image {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
 }

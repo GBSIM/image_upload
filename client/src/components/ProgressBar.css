@@ -1,0 +1,21 @@
+.progress-bar-box {
+    width: 100%;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.progress-bar {
+    display: flex;
+    flex: row;
+    justify-content: center;
+    align-items: center;
+    background: greenyellow;
+    height: 100%;
+    border-radius: 10px;
+    transition: 0.5s;
+}
