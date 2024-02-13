@@ -3,4 +3,49 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    row-gap: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.upload-form-box {
+    border: 1px dashed #aaa;
+    height: 300px;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.upload-form-box:hover {
+    background-color: #eee;
+    transition: 0.5s;
+}
+
+.upload-form-box-file-name {
+    color: #999;
+}
+
+.upload-form-box input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.upload-form-submit-button {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background: #ddd;
+    cursor: pointer;
+}
+
+.upload-form-submit-button:hover {
+    background: #eee;
 }
