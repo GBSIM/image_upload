@@ -5,6 +5,7 @@ const multer = require('multer');
 const { v4: uuid } = require('uuid');
 const mime = require('mime-types');
 const mongoose = require('mongoose');
+const Image = require("./models/Image");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, "./uploads"),
@@ -31,7 +32,8 @@ mongoose.connect(
     console.log("MongoDB connected") 
     
     app.use("/uploads",express.static("uploads"));
-    app.post('/upload', upload.single("image"), (req,res) => {
+    app.post('/upload', upload.single("image"), async(req,res) => {
+        await new Image({key: req.file.filename, originalFileName: req.file.originalname}).save()
         console.log(req.file);
         res.json(req.file);
     })
