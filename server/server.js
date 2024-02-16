@@ -8,6 +8,7 @@ const { userRouter } = require("./routes/userRouter");
 
 const app = express();
 const { MONGODB_URI, PORT } = process.env;
+const { authenticate } = require("./middleware/authentication");
 
 mongoose.connect(
     MONGODB_URI,
@@ -16,6 +17,7 @@ mongoose.connect(
     console.log("MongoDB connected") 
     app.use("/uploads",express.static("uploads"));
     app.use(express.json());
+    app.use(authenticate);
     app.use("/images", imageRouter);
     app.use("/users",userRouter);
     app.listen(PORT, () => console.log("Express server liseting on PORT " + PORT));  
