@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ImageContext } from './ImageContext';
+import { ImageContext } from '../context/ImageContext';
 
 import './ImageList.css';
 

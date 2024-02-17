@@ -1,0 +1,13 @@
+.customer-input {
+    width: 100%;
+    border: 1px solid #aaa;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    padding-left: 2px;
+    height: 24px;
+}
+
+.customer-label {
+    color: #999;
+}
