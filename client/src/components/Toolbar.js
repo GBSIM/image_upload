@@ -4,6 +4,7 @@ import './Toolbar.css';
 import { AuthContext } from "../context/AuthContext";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { ImageContext } from "../context/ImageContext";
 
 const Toolbar = () => {
     const [me, setMe] = useContext(AuthContext);
@@ -31,7 +32,7 @@ const Toolbar = () => {
                 (
                     <>
                         <span>{me.name}님</span>
-                        <span onClick={logoutHanlder}>로그아웃</span>
+                        <span className="toolbar-logout" onClick={logoutHanlder}>로그아웃</span>
                     </>
                 ) :
                 ( <><Link to="/auth/login">

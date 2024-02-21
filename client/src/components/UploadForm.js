@@ -10,7 +10,8 @@ const UploadForm = () => {
     const [fileName, setFileName] = useState("이미지 파일을 업로드해주세요.");
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [imageSrc, setImageSrc] = useState(null);
-    const [images, setImages] = useContext(ImageContext);
+    const {images, setImages, myImages, setMyImages} = useContext(ImageContext);
+    const [isPublic, setIsPublic] = useState(true);
 
     const imageSelectHandler = (event) => {
         const imageFile = event.target.files[0];
@@ -27,6 +28,7 @@ const UploadForm = () => {
         event.preventDefault();
         const formData = new FormData();
         formData.append("image", file);
+        formData.append("public", isPublic);
         try {
             const res = await axios.post('/images', formData, {
                 headers: {"Content-Type": "multipart/form-data"},
@@ -35,12 +37,22 @@ const UploadForm = () => {
                 },
             });
             console.log({ res });
-            setImages([...images, res.data])
+            if (isPublic) {
+                setImages([...images, res.data]);
+            } else {
+                setMyImages([...myImages, res.data]);
+            }
+            
             toast.success("이미지 업로드에 성공하였습니다.");
+            setTimeout(() => {
+                setFile(null);
+                setFileName("이미지 파일을 업로드해주세요.");
+                setUploadPercentage(0);
+                setImageSrc(null);
+            }, 3000);
         } catch(err) {
-            alert("Fail !!");
             console.error(err);
-            toast.error("Fail !!");
+            toast.error(err.response.data.message);
             setImageSrc(null);
         }
     }
@@ -58,6 +70,10 @@ const UploadForm = () => {
                 {InputGuide}
                 <img src={imageSrc} className="upload-form-box-image"></img>
                 <input id="image" type="file" onChange={imageSelectHandler}/>
+            </div>
+            <div className="upload-form-public-checkbox">
+                <input type="checkbox" id="public-check" value={!isPublic} onChange={()=> setIsPublic(!isPublic)}/>
+                <label htmlFor="public-check">비공개</label>
             </div>
             <button className="upload-form-submit-button" type="submit">제출하기</button>
         </form>

@@ -10,3 +10,7 @@
 .toolbar-space {
     flex: 1;
 }
+
+.toolbar-logout {
+    cursor: pointer;
+}

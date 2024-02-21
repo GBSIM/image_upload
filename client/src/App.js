@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import MainPage from './pages/MainPage';
 import Toolbar from './components/Toolbar';
+import ImagePage from './pages/ImagePage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -20,6 +21,7 @@ const App = () => {
         <Route exact path="/" element={<MainPage/>}/>
         <Route exact path="/auth/register" element={<RegisterPage/>}/>
         <Route exact path="/auth/login" element={<LoginPage/>}/>
+        <Route exact path="/images/:imageId" element={<ImagePage/>}/>
       </Routes>
     </div>
   );
