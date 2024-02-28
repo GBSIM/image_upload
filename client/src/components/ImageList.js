@@ -12,12 +12,12 @@ const ImageList = () => {
     let imageList;
     if (isPublic) {
         imageList = images.map(image => 
-        <Link to={`/images/${image._id}`}>
+        <Link to={`/images/${image._id}`} key={image._id}>
             <img className='image' src={`http://localhost:4000/uploads/${image.key}`} key={image.key}></img>
         </Link>); 
     } else {
         imageList = myImages.map(image => 
-        <Link to={`/images/${image._id}`}>
+        <Link to={`/images/${image._id}`} key={image._id}>
             <img className='image' src={`http://localhost:4000/uploads/${image.key}`} key={image.key}></img>
         </Link>);
     }

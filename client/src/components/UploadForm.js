@@ -6,7 +6,7 @@ import ProgressBar from "./ProgressBar";
 import { ImageContext } from "../context/ImageContext";
 
 const UploadForm = () => {
-    const [file, setFile] = useState(null);
+    const [files, setFiles] = useState(null);
     const [fileName, setFileName] = useState("이미지 파일을 업로드해주세요.");
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [imageSrc, setImageSrc] = useState(null);
@@ -14,11 +14,11 @@ const UploadForm = () => {
     const [isPublic, setIsPublic] = useState(true);
 
     const imageSelectHandler = (event) => {
-        const imageFile = event.target.files[0];
-        setFile(imageFile);
-        setFileName(imageFile.name);
+        const imageFiles = event.target.files;
+        setFiles(imageFiles);
+        setFileName(imageFiles[0].name);
         const fileReader = new FileReader();
-        fileReader.readAsDataURL(imageFile);
+        fileReader.readAsDataURL(imageFiles[0]);
         fileReader.onload = e => {
             setImageSrc(e.target.result);
         }
@@ -27,7 +27,10 @@ const UploadForm = () => {
     const submitHandler = async(event) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append("image", file);
+        const filesArray = [ ... files];
+        filesArray.map((file) => {
+            formData.append("image", file);
+        })
         formData.append("public", isPublic);
         try {
             const res = await axios.post('/images', formData, {
@@ -36,16 +39,15 @@ const UploadForm = () => {
                     setUploadPercentage(Math.round(e.loaded / e.total * 100));
                 },
             });
-            console.log({ res });
             if (isPublic) {
-                setImages([...images, res.data]);
+                setImages([...images, ...res.data]);
             } else {
-                setMyImages([...myImages, res.data]);
+                setMyImages([...myImages, ...res.data]);
             }
             
             toast.success("이미지 업로드에 성공하였습니다.");
             setTimeout(() => {
-                setFile(null);
+                setFiles(null);
                 setFileName("이미지 파일을 업로드해주세요.");
                 setUploadPercentage(0);
                 setImageSrc(null);
@@ -58,7 +60,7 @@ const UploadForm = () => {
     }
 
     let InputGuide;
-    if (file === null) {
+    if (files === null) {
         InputGuide = 
             <span className="upload-form-box-file-name">{fileName}</span>
     }
@@ -69,7 +71,7 @@ const UploadForm = () => {
             <div className="upload-form-box">
                 {InputGuide}
                 <img src={imageSrc} className="upload-form-box-image"></img>
-                <input id="image" type="file" onChange={imageSelectHandler}/>
+                <input id="image" type="file" multiple onChange={imageSelectHandler}/>
             </div>
             <div className="upload-form-public-checkbox">
                 <input type="checkbox" id="public-check" value={!isPublic} onChange={()=> setIsPublic(!isPublic)}/>
