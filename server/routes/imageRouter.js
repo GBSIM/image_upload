@@ -36,7 +36,18 @@ imageRouter.post('/', upload.array("image", 5), async(req,res) => {
 
 imageRouter.get("/", async(req, res) => {
     try {
-        const images = await Image.find({public: true});
+        const { lastid } = req.query;
+        console.log(lastid);
+        if (lastid && !mongoose.isValidObjectId(lastid)) throw new Error("invalid lastid");
+        const images = await Image.find(
+            lastid
+            ? {
+                public: true,
+                _id: {$lt: lastid },
+            } : {
+                public: true
+            }
+        ).sort({_id: -1}).limit(20);
         return res.json(images);
     } catch(err) {
         console.log(err);

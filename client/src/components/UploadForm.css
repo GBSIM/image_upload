@@ -63,3 +63,12 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.upload-form-preview-images {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    row-gap: 10px;
+}
