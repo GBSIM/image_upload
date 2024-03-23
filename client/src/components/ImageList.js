@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const ImageList = () => {
     const [me] = useContext(AuthContext);
-    const { images, myImages, isPublic, setIsPublic, loaderMoreImages } = useContext(ImageContext);
+    const { images, myImages, isPublic, setIsPublic, loaderMoreImages, imageError, imageLoading } = useContext(ImageContext);
     
     let imageList;
     if (isPublic) {
@@ -31,7 +31,8 @@ const ImageList = () => {
             <div className='image-list-images'>
                 {imageList}
             </div>
-            <button onClick={() => loaderMoreImages()}>이미지 더 불러오기</button>
+            {imageError && <div>에러가 발생했어요.</div>}
+            {imageLoading ? <div>로딩 중 ...</div> : <button onClick={() => loaderMoreImages()}>이미지 더 불러오기</button>}
         </div>
     )
 }
